@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('estoques', function (Blueprint $table) {
             $table->id();
+            $table->string('id_produto');
+            $table->string('tipo_movimentacao');
+            $table->string('quantidade');
+            $table->string('nivel_minimo');
+            $table->string('data_movimentacao');                      
             $table->timestamps();
         });
     }

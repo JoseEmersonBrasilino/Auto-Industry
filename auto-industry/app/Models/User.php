@@ -2,49 +2,46 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
+use Filament\Models\Contracts\HasName; // 💡 IMPORTANTE: Adicione este import
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasName // 💡 IMPORTANTE: Adicione o "implements HasName"
 {
-    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
+    protected $table = 'users';
+    protected $primaryKey = 'id_usuario';
+
     protected $fillable = [
-        'auto industry',
-        'autoindustry@gmail.com 
-',
-        'auto2026',
+        'nome',
+        'login',
+        'senha',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
-        'password',
+        'senha',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    // Avisa o Laravel que o campo de segurança é 'login'
+    public function getAuthIdentifierName()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return 'login';
+    }
+
+    // Avisa o Laravel onde está a senha criptografada
+    public function getAuthPassword()
+    {
+        return $this->senha;
+    }
+
+    /**
+     * 💡 O TOQUE FINAL: Diz ao Filament para usar a coluna 'nome' no painel visual
+     */
+    public function getFilamentName(): string
+    {
+        return $this->nome;
     }
 }

@@ -23,7 +23,21 @@ class EstoqueResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('id_produto')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('tipo_movimentacao')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('quantidade')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('nivel_minimo')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('data_movimentacao')
+                    ->required()
+                    ->maxLength(255),
             ]);
     }
 
@@ -31,7 +45,24 @@ class EstoqueResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('id_produto')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('tipo_movimentacao')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('quantidade')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('nivel_minimo')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('data_movimentacao')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
